@@ -1,0 +1,7 @@
+*.jld2
+*.gif
+*.mp4
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
