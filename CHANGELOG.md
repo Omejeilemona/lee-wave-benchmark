@@ -26,7 +26,7 @@ from commits.** From the first commit onward, history is tracked by git.
 
 ## Code structure
 - `params.jl` holds every number; `describe(p)` prints derived checks.
-- `run_case.jl` options: `test`, `centered`, `nz=...`, `h0=...`. File names carry the
+- `run_case.jl` options: `test`, `centered`, `nx=...`, `nz=...`, `h0=...`. File names carry the
   resolution and ridge height so runs do not overwrite each other.
 - `compare.jl` and `flux_profile.jl` read the grid size from the output file and the ridge
   height from the file name.
