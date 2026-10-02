@@ -1,7 +1,8 @@
 # =====================================================================
 # internal_wave_demo_corrected.jl
 # The starting script (archive/internal_wave_demo.jl) with its parameters corrected, as a
-# single-file demo. Every changed line is marked "CHANGED". NOT YET RUN.
+# single-file demo. Every changed line is marked "CHANGED". The full 18 h run completed (about 1.5 h on
+# the author's laptop); see the result at the end of this header.
 #
 # CHANGED:
 #   1. N2 = 1e-4 -> 4e-6 (N = 2e-3 1/s). The original gave N*h0/U = 1.0, not the 0.3 in its
@@ -15,8 +16,11 @@
 # NOT changed (known limits): Centered advection with no closure; the sponge does not act on buoyancy;
 # the flux is taken at one level (z = -600 m) over the whole width; the reference is the hydrostatic
 # value (the nonhydrostatic linear value for these parameters is 0.98 of it, from theory.jl).
-# Expected from validation_log.md (runs 3-4): the simulated flux settles at roughly 1.4-1.5 times the
-# red line, the same unexplained offset as in the main benchmark.
+# RESULT of the full run (validation_log.md, row 14): the simulated flux at z = -600 m crosses the red line
+# at about 4 h and settles at roughly twice the red line, with oscillations after about 10 h. I had
+# expected 1.4-1.5 times (runs 3-4), so the expectation was wrong: with Centered advection the offset is
+# larger than with WENO on the same grid. The flux level, averaging window and duration differ from
+# compare.jl, so this is suggestive, not a like-for-like comparison.
 # =====================================================================
 using Oceananigans
 using Oceananigans.Solvers: ConjugateGradientPoissonSolver
