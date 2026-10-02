@@ -7,6 +7,8 @@
 #   run(`julia --project run_case.jl 0.0`)            # f = 0, full run (validation case)
 #   run(`julia --project run_case.jl 1.4e-4`)         # rotating case
 #   run(`julia --project run_case.jl 0.0 centered`)   # optional: Centered advection instead of WENO
+#   run(`julia --project run_case.jl 0.0 nz=512`)     # optional: finer vertical grid (file: lee_f0_nz512.jld2)
+#   run(`julia --project run_case.jl 0.0 nz=512 h0=40`) # optional: ridge height 40 m (file: lee_f0_nz512_h40.jld2)
 #
 # Output file names:  lee_f0.jld2 / lee_frot.jld2  (+ _centered, _test if used)
 #
@@ -31,10 +33,17 @@ flags     = ARGS[2:end]
 test_mode = "test" in flags
 centered  = "centered" in flags
 
-p = benchmark_params(; f = f_val)
+nz_flag = findfirst(startswith("nz="), flags)
+Nz_val  = nz_flag === nothing ? 256 : parse(Int, split(flags[nz_flag], "=")[2])
+
+h0_flag = findfirst(startswith("h0="), flags)
+h0_val  = h0_flag === nothing ? 20.0 : parse(Float64, split(flags[h0_flag], "=")[2])
+
+p = benchmark_params(; f = f_val, Nz = Nz_val, h0 = h0_val)
 describe(p)
 
-tag      = (p.f == 0 ? "f0" : "frot") * (centered ? "_centered" : "") * (test_mode ? "_test" : "")
+res_tag  = (Nz_val == 256 ? "" : "_nz$(Nz_val)") * (h0_val == 20.0 ? "" : "_h$(round(Int, h0_val))")   # keeps runs in different files
+tag      = (p.f == 0 ? "f0" : "frot") * res_tag * (centered ? "_centered" : "") * (test_mode ? "_test" : "")
 filename = "lee_" * tag * ".jld2"
 stop     = test_mode ? 1800.0 : p.stop_time
 @info "Running" f = p.f advection = (centered ? "Centered" : "WENO") stop_time_s = stop output = filename
@@ -45,6 +54,7 @@ underlying_grid = RectilinearGrid(
     x = (-p.Lx / 2, p.Lx / 2),
     z = (-p.Lz, 0),
     topology = (Periodic, Flat, Bounded),
+    halo = (4, 4),      # (x, z) only: y is Flat. An ImmersedBoundaryGrid needs the extra halo point.
 )
 
 h0, σ, Lz = p.h0, p.σ, p.Lz

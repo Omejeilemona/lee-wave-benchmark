@@ -34,20 +34,21 @@ const f_arctic = 1.4e-4   # s^-1
 Return all parameters as a NamedTuple.
   f     : Coriolis parameter (0.0 = no rotation, f_arctic = rotating case)
   alpha : 1 = nonhydrostatic (matches the simulation), 0 = hydrostatic
+  Nx,Nz : grid points in x and z (defaults 512 x 256)
+  h0    : ridge height in m (default 20)
 """
-function benchmark_params(; f = 0.0, α = 1)
+function benchmark_params(; f = 0.0, α = 1, Nx = 512, Nz = 256, h0 = 20.0)
     return (;
         # --- physics ---
         f, α,
         U  = 0.2,        # m/s   background flow
         N  = 2e-3,       # 1/s   buoyancy frequency (uniform stratification)
-        h0 = 20.0,       # m     ridge height
+        h0,              # m     ridge height (keyword above; default 20 m)
         σ  = 500.0,      # m     ridge half-width (Gaussian)
         # --- domain / grid (2D: x and z) ---
         Lx = 20e3,       # m
         Lz = 1000.0,     # m
-        Nx = 512,
-        Nz = 256,
+        Nx, Nz,          # grid points in x and z (keywords above)
         # --- time stepping and output ---
         Δt = 20.0,                 # s
         stop_time = 6 * 3600.0,    # s  (6 hours)

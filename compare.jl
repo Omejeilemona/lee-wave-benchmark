@@ -25,7 +25,6 @@ include(joinpath(@__DIR__, "theory.jl"))
 
 file  = ARGS[1]
 f_val = parse(Float64, ARGS[2])
-p     = benchmark_params(; f = f_val)
 tag   = replace(basename(file), ".jld2" => "")
 
 u_ts = FieldTimeSeries(file, "u")
@@ -33,6 +32,12 @@ v_ts = FieldTimeSeries(file, "v")
 w_ts = FieldTimeSeries(file, "w")
 b_ts = FieldTimeSeries(file, "b")
 times = u_ts.times
+
+# grid size is read from the file, so runs at different resolutions compare correctly
+Nx_file, Nz_file = size(Array(interior(u_ts[1], :, 1, :)))
+m_h0   = match(r"_h(\d+)", basename(file))          # ridge height is encoded in the file name, e.g. _h40
+h0_file = m_h0 === nothing ? 20.0 : parse(Float64, m_h0.captures[1])
+p = benchmark_params(; f = f_val, Nx = Nx_file, Nz = Nz_file, h0 = h0_file)
 
 # ---- grid coordinates (uniform grid, so computed directly) ---------------
 dx = p.Lx / p.Nx

@@ -1,0 +1,29 @@
+# Validation log
+
+Reference: N*U*h0^2 = 0.16 m^3/s^2 (N = 2e-3, U = 0.2, h0 = 20, sigma = 500).
+Linear theory (theory.jl): drag/ref = 0.980 for f = 0; 0.748 for f = 1.4e-4 using the
+conserved flux F = u'w' - f v'b'/N^2 (u'w' alone would give 1.070).
+Tolerance chosen for this demo: about 10 %. Dates: fill in.
+
+| # | Date | What | Command | Result: drag/ref | Notes |
+|---|------|------|---------|------------------|-------|
+| 0 | | Starting script `internal_wave_demo.jl` | -- | not compared | N = 1e-2 gives Fr_L = 1.0; compared a rotating run with a non-rotating formula |
+| 1 | | Theory self-test (Julia) | `julia --project theory.jl` | 0.980 (f=0); 0.748 (f=1.4e-4) | w(x,0) = U dh/dx to 1e-14. Matches an independent Python port. |
+| 2 | | f=0, 30-min timing test | `run_case.jl 0.0 test` | 0.064 | Only 3 snapshots; waves had not reached the measurement band. Not a result. |
+| 3 | | f=0, 6 h, Nz=256, WENO | `run_case.jl 0.0` | **1.455 (+48.5 %)** | Plateau from 4 h, drift -1.5 %. 7.6 min. |
+| 4 | | f=0, 6 h, Nz=512, WENO | `run_case.jl 0.0 nz=512` | **1.366 (+39.4 %)** | Drift -1.6 %. 17.8 min. |
+| 5 | | Flux vs height, runs 3 and 4 | `flux_profile.jl` | ratio sim/linear = 1.46 (Nz=256), 1.37 (Nz=512), constant from 25 to 500 m | Wave propagation matches; amplitude at generation is about 17-21 % high. |
+| 6 | | f=0, Nz=512, h0=40 m | `run_case.jl 0.0 nz=512 h0=40` | pending | Tests nonlinearity (ratio up) versus numerics (ratio down). |
+
+## Checks that are not part of the repository scripts (own Python calculations)
+- Steady linear model with rigid lid and the same sponge (200 m, 600 s): drag/ref = 0.915;
+  600 m sponge: 1.014; lid with no damping: about 0 (as in Baker & Mashayek 2021, sec 2.8).
+  So lid/sponge reflection explains at most about -7 %, not +39 %.
+- Linear impulsive-start model (no sponge, tall domain): drag at 75 m above the crest reaches
+  about 0.99 by 5 h with no overshoot.
+Add these scripts under `checks/` if you cite them.
+
+## Open question
+Why the simulated flux is about 1.4 times linear theory at all heights. Candidates:
+finite-amplitude nonlinearity at the ridge; treatment of the immersed (staircase) ridge in
+the model; an unfound error in the diagnostic or theory.
