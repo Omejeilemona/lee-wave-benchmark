@@ -16,10 +16,10 @@ Tolerance chosen for this demo: about 10 %. Dates: fill in.
 | 6 | | f=0, Nz=512, h0=40 m | `run_case.jl 0.0 nz=512 h0=40` | aborted | Stalled after about 50 steps; max\|w\| = 8.7e-2 m/s (vertical Courant number about 0.9, still growing). Not a result. |
 | 7 | | f=0, 6 h, Nz=256, h0=40 m (ridge 10 cells, Fr_L = 0.4) | `run_case.jl 0.0 nz=256 h0=40` | **1.419 (+44.9 %)** | Drift +4.7 %. Profile ratio sim/linear 1.42-1.43 (75-200 m). 8.8 min. Same cells per ridge height as run 4 (1.366): doubling Fr_L raised the ratio only about 4 %, so nonlinearity is a small part of the excess. |
 | 8 | | f=0, 6 h, Nx=1024, Nz=256, h0=20 m | `run_case.jl 0.0 nx=1024` | **1.313 (+34.1 %)** | Drift -1.6 %. Profile ratio sim/linear 1.32-1.34 (25-300 m), 1.28 at 400-500 m. 16 min. Halving dx lowered the excess more (ratio sim/linear 1.46 -> 1.32) than halving dz (1.46 -> 1.37). Fitting excess = a + b*dx + c*dz through runs 3, 4, 8 gives a = 0.00; with dx^2, dz^2 instead a = 0.15. Both predict about 1.23 at dx = 19.5 m, dz = 1.95 m. Three points fit three parameters exactly, so this is a plausibility argument, not proof. |
-| 9 | | f=1.4e-4, 6 h, Nx=1024, Nz=256, h0=20 m | `run_case.jl 1.4e-4 nx=1024` | pending | Rotation test. Metric: drag(rot)/drag(f=0) on the same grid, which is insensitive to the common discretisation offset. Linear impulsive-start prediction at 4-6 h, 75 m above crest: 0.69 (steady theory: 0.763). |
+| 9 | | f=1.4e-4, 6 h, Nx=1024, Nz=256, h0=20 m | `run_case.jl 1.4e-4 nx=1024` | **0.931 (+24.5 % vs steady theory 0.748)** | Drift +2.9 %. 14.7 min. Drag(rot)/drag(f=0) on the same grid: 0.931/1.313 = 0.709; linear impulsive-start prediction 0.691 (steady theory 0.763). Profile ratio sim/linear 1.40 (25 m) to 1.32 (300 m); 1.35 at 75 m against 1.32 for f=0. u'w' alone gives 1.254 against F = 0.931; the f v'b'/N^2 term is 0.32 in both simulation and steady theory (units of N U h0^2). Check fig_flux_lee_frot_nx1024.png for any oscillation with the 12.5 h inertial period. |
 | 10 | | f=0, 6 h, Nx=1024, Nz=512, h0=20 m | `run_case.jl 0.0 nx=1024 nz=512` | pending | Balanced refinement. Predicted ratio sim/linear about 1.23 if the errors are additive discretisation errors. About 40 min. |
 
-## Checks that are not part of the repository scripts (own Python calculations)
+## Checks (own Python calculations, in `checks/`)
 - Steady linear model with rigid lid and the same sponge (200 m, 600 s): drag/ref = 0.915;
   600 m sponge: 1.014; lid with no damping: about 0 (as in Baker & Mashayek 2021, sec 2.8).
   So lid/sponge reflection explains at most about -7 %, not +39 %.
@@ -28,7 +28,6 @@ Tolerance chosen for this demo: about 10 %. Dates: fill in.
 - Same model with rotation (f = 1.4e-4), mean over t = 4-6 h, 75 m above the crest: drag/ref = 0.689
   against 0.997 for f = 0, a ratio of 0.69 (steady theory: 0.763). Low-wavenumber waves have not
   equilibrated by 4-6 h.
-Add these scripts under `checks/` if you cite them.
 
 ## Open question
 Why the simulated flux exceeds linear theory by 30-45 % on the grids used. Runs 3-8: the excess barely
