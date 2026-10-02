@@ -13,7 +13,9 @@ Tolerance chosen for this demo: about 10 %. Dates: fill in.
 | 3 | | f=0, 6 h, Nz=256, WENO | `run_case.jl 0.0` | **1.455 (+48.5 %)** | Plateau from 4 h, drift -1.5 %. 7.6 min. |
 | 4 | | f=0, 6 h, Nz=512, WENO | `run_case.jl 0.0 nz=512` | **1.366 (+39.4 %)** | Drift -1.6 %. 17.8 min. |
 | 5 | | Flux vs height, runs 3 and 4 | `flux_profile.jl` | ratio sim/linear = 1.46 (Nz=256), 1.37 (Nz=512), constant from 25 to 500 m | Wave propagation matches; amplitude at generation is about 17-21 % high. |
-| 6 | | f=0, Nz=512, h0=40 m | `run_case.jl 0.0 nz=512 h0=40` | pending | Tests nonlinearity (ratio up) versus numerics (ratio down). |
+| 6 | | f=0, Nz=512, h0=40 m | `run_case.jl 0.0 nz=512 h0=40` | aborted | Stalled after about 50 steps; max\|w\| = 8.7e-2 m/s (vertical Courant number about 0.9, still growing). Not a result. |
+| 7 | | f=0, 6 h, Nz=256, h0=40 m (ridge 10 cells, Fr_L = 0.4) | `run_case.jl 0.0 nz=256 h0=40` | **1.419 (+44.9 %)** | Drift +4.7 %. Profile ratio sim/linear 1.42-1.43 (75-200 m). 8.8 min. Same cells per ridge height as run 4 (1.366): doubling Fr_L raised the ratio only about 4 %, so nonlinearity is a small part of the excess. |
+| 8 | | f=0, Nx=1024, Nz=256, h0=20 m | `run_case.jl 0.0 nx=1024` | pending | First test of horizontal resolution (dx 39 -> 19.5 m); dx was never varied in runs 3-7. |
 
 ## Checks that are not part of the repository scripts (own Python calculations)
 - Steady linear model with rigid lid and the same sponge (200 m, 600 s): drag/ref = 0.915;
@@ -24,6 +26,7 @@ Tolerance chosen for this demo: about 10 %. Dates: fill in.
 Add these scripts under `checks/` if you cite them.
 
 ## Open question
-Why the simulated flux is about 1.4 times linear theory at all heights. Candidates:
-finite-amplitude nonlinearity at the ridge; treatment of the immersed (staircase) ridge in
-the model; an unfound error in the diagnostic or theory.
+Why the simulated flux is about 1.4 times linear theory at all heights. Runs 3-7 show the ratio
+barely depends on ridge height (Fr_L 0.2 -> 0.4: +4 %) and only slowly on vertical resolution
+(1.46 -> 1.37 for dz halved). Remaining candidates: horizontal resolution / how the immersed
+staircase ridge is represented; a model setting; an unfound error in the diagnostic or theory.
