@@ -139,5 +139,5 @@ files (`lee_*.jld2`, up to about 100 MB each) are not kept in the repository.
 
 ## Acknowledgement of assistance
 
-I developed the code, theory checks and documentation with the help of an AI assistant (Claude,
-Anthropic). I ran all the simulations and am responsible for the content.
+I developed the code, theory checks and documentation with the help of an AI assistant. I ran all the
+simulations and am responsible for the content.
