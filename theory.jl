@@ -5,17 +5,21 @@
 #
 # SOURCES
 #   Linear steady lee-wave theory: Bell (1975), J. Geophys. Res. 80, 320-327.
-#   Formulation used here (equation numbers refer to the arXiv preprint,
-#   please check them against the published version before quoting):
+#   Formulation used here. Equation numbers are those of the published version
+#   (checked against the PDF):
 #     Baker & Mashayek (2021), "Surface reflection of bottom generated
-#     oceanic lee waves", J. Fluid Mech. (arXiv:2103.03779).
+#     oceanic lee waves", J. Fluid Mech. 924, A17, doi:10.1017/jfm.2021.627
+#     (preprint arXiv:2103.03779, where the E-P flux and energy flux equations
+#     below were numbered 2.46 and 2.48).
 #       eq 2.18  vertical wavenumber m(k)
 #       eq 2.19  waves propagate only if |f| < |U k| < |N|
 #       eq 2.21-2.23  bottom condition w = U dh/dx, solution via Fourier transform
 #       eq 3.1   radiating solution  zeta_hat = exp(i m z)
 #       eq 2.8, 2.10  give v and b from u and w (for uniform U, no viscosity)
-#       eq 2.46  Eliassen-Palm flux  F = <u w> - f <v b> / N^2
-#       eq 2.48  energy flux  <p w> = -rho0 * U * F
+#       eq 2.45  energy flux at the topography = U * form drag
+#       eq 2.47  Eliassen-Palm flux  F = <u w> - f <v b> / N^2
+#       eq 2.49  energy flux  <p w> = -rho0 * U * F  (to O(A_h k/U); exact form 2.48)
+#       eq 2.50  F is conserved with height when there is no dissipation (F_z = 0)
 #   This is a fresh implementation of those equations (not their code).
 #
 # WHAT IT COMPUTES
