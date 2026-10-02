@@ -3,7 +3,7 @@
 Changes from the starting script (`archive/internal_wave_demo.jl`, kept unmodified) to the current
 scripts. It was added to the repository after the later versions, so the git history itself begins at the
 theory stage. `internal_wave_demo_corrected.jl` is an updated copy of the starting script with only its
-parameters corrected (changes marked in the file; the full 18 h run gave about twice the linear drag, see `validation_log.md`). The first commits hold the first versions of the
+parameters corrected (changes marked in the file; the full 18 h run gave about 2.3 times the linear drag, see `validation_log.md`). The first commits hold the first versions of the
 theory and simulation scripts; edits made before them are listed below, **reconstructed from
 development notes, not from commits.** See `archive/about_starting_script.md` for what was wrong
 with the starting script.

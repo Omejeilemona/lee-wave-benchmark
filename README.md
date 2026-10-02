@@ -80,7 +80,7 @@ diagnostic itself (applied to the exact linear solution on the staggered grid it
 checked in Python).
 
 Partial evidence on the advection scheme: the single-file demo (`internal_wave_demo_corrected.jl`, Centered
-advection) gave about twice the linear drag, against about 1.5 times with WENO on the same grid (row 14 of the
+advection) gave about 2.3 times the steady linear drag, against about 1.5 times with WENO on the same grid (row 14 of the
 log). That comparison is not like for like (different flux level, window and duration), so a clean test is
 planned. Not yet tested: the time step and how the immersed ridge is represented. Whether the offset is a
 model or numerical effect, or a difference between the simulation and the linear problem that I have not
@@ -123,7 +123,7 @@ files (`lee_*.jld2`, up to about 100 MB each) are not kept in the repository.
 | `CHANGELOG.md` | How the scripts evolved from the starting script |
 | `figures/` | Comparison figures |
 | `archive/` | The starting script, unmodified, and why it was replaced |
-| `internal_wave_demo_corrected.jl` | An updated copy of the starting script with its parameters corrected, as a single-file demo (full run: about twice the linear drag; see the log) |
+| `internal_wave_demo_corrected.jl` | An updated copy of the starting script with its parameters corrected, as a single-file demo (full run: about 2.3 times the linear drag; see the log) |
 | `checks/` | Independent Python calculations |
 
 ## References

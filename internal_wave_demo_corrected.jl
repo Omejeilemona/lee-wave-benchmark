@@ -12,12 +12,14 @@
 #      u'w' - f v'b'/N^2; see run_case.jl and compare.jl for that.
 #   3. Time step 5 s -> 20 s (advective CFL 0.10), as in the main benchmark. Run length unchanged.
 #   4. Output file names carry "_corrected" so they do not overwrite the original's outputs.
+#   5. Legend moved from the bottom right to the top right so that it does not cover the curve.
 #
 # NOT changed (known limits): Centered advection with no closure; the sponge does not act on buoyancy;
 # the flux is taken at one level (z = -600 m) over the whole width; the reference is the hydrostatic
 # value (the nonhydrostatic linear value for these parameters is 0.98 of it, from theory.jl).
 # RESULT of the full run (validation_log.md, row 14): the simulated flux at z = -600 m crosses the red line
-# at about 4 h and settles at roughly twice the red line, with oscillations after about 10 h. I had
+# at about 4 h and averages 2.22 times the red line over the last 2 h (2.3 times the steady linear value of
+# 0.98, drift 10 %), with oscillations after about 10 h. I had
 # expected 1.4-1.5 times (runs 3-4), so the expectation was wrong: with Centered advection the offset is
 # larger than with WENO on the same grid. The flux level, averaging window and duration differ from
 # compare.jl, so this is suggestive, not a like-for-like comparison.
@@ -175,7 +177,7 @@ ax2 = Axis(fig2[1, 1],
 
 lines!(ax2, times ./ 3600, flux, label = "Simulation (Oceananigans)", color = :blue, linewidth = 2)
 hlines!(ax2, [-D_lin], linestyle = :dash, color = :red, label = "Linear Theory (-N U₀ h₀²)")
-axislegend(ax2, position = :rb)
+axislegend(ax2, position = :rt)   # CHANGED: was :rb, which covered the curve
 
 save("flux_vs_theory_corrected.png", fig2)   # CHANGED name
 println("Done! Quantitative plot saved as flux_vs_theory_corrected.png")
