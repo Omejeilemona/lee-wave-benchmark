@@ -8,7 +8,7 @@
 # It averages the drag  -F = -(u'w' - f v'b'/N^2), integrated over x outside the
 # sponges, over t = 4-6 h, at several heights above the ridge crest.
 #
-# For f = 0 it prints, next to the simulation, my linear PREDICTION for the same
+# For f = 0 (and f = 1.4e-4 up to 300 m) it prints, next to the simulation, my linear PREDICTION for the same
 # quantity: an impulsive start of flow over the ridge (inviscid, nonhydrostatic,
 # f = 0, N = 2e-3, U = 0.2, h0 = 20, sigma = 500, a tall rigid-lid domain),
 # averaged over t = 4-6 h. This is my own calculation (a small Python script),
@@ -74,6 +74,8 @@ ref = p.N * p.U * p.h0^2      # N*U*h0^2, the same reference as in theory.jl
 
 # linear impulsive-start prediction, mean over 4-6 h (f = 0 only; see header)
 linear = [1.032, 1.018, 0.997, 0.972, 0.909, 0.831, 0.674, 0.527, 0.404]
+# same model with rotation f = 1.4e-4 (first 7 heights only: 25-300 m), mean over 4-6 h
+linear_rot = [0.686, 0.694, 0.689, 0.677, 0.640, 0.590, 0.482]
 
 println("\n=========== flux versus height (mean over t = 4-6 h, f = $(p.f), Nz = $(p.Nz)) ===========")
 if p.f == 0
@@ -82,9 +84,13 @@ if p.f == 0
         @printf("%8d                  %7.3f        %7.3f      %6.2f\n", h, drag[m] / ref, linear[m], drag[m] / ref / linear[m])
     end
 else
-    println("height above crest [m]   simulation/ref   (no linear prediction stored for f != 0)")
+    println("height above crest [m]   simulation/ref   linear/ref   ratio sim/linear   (rotating linear values stored for f = 1.4e-4 only)")
     for (m, h) in enumerate(heights)
-        @printf("%8d                  %7.3f\n", h, drag[m] / ref)
+        if m <= length(linear_rot)
+            @printf("%8d                  %7.3f        %7.3f      %6.2f\n", h, drag[m] / ref, linear_rot[m], drag[m] / ref / linear_rot[m])
+        else
+            @printf("%8d                  %7.3f            -           -\n", h, drag[m] / ref)
+        end
     end
 end
 println("=====================================================================================\n")
