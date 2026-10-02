@@ -119,6 +119,8 @@ files (`lee_*.jld2`, up to about 100 MB each) are not kept in the repository.
 | `validation_log.md` | Every run, including failures, and the open question |
 | `CHANGELOG.md` | How the scripts evolved from the starting script |
 | `figures/` | Comparison figures |
+| `archive/` | The starting script, unmodified, and why it was replaced |
+| `internal_wave_demo_corrected.jl` | An updated copy of the starting script with its parameters corrected, as a single-file demo (not yet run) |
 | `checks/` | Independent Python calculations |
 
 ## References

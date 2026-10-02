@@ -1,9 +1,12 @@
 # Changelog
 
-Changes from the starting script (`internal_wave_demo.jl`, not included in this repository)
-to the current scripts. The first commits hold the first versions of the theory and simulation
-scripts; edits made before them are listed below, **reconstructed from development notes, not
-from commits.** From the first commit onward, history is tracked by git.
+Changes from the starting script (`archive/internal_wave_demo.jl`, kept unmodified) to the current
+scripts. It was added to the repository after the later versions, so the git history itself begins at the
+theory stage. `internal_wave_demo_corrected.jl` is an updated copy of the starting script with only its
+parameters corrected (changes marked in the file; not yet run). The first commits hold the first versions of the
+theory and simulation scripts; edits made before them are listed below, **reconstructed from
+development notes, not from commits.** See `archive/about_starting_script.md` for what was wrong
+with the starting script.
 
 ## Physics / set-up
 - Stratification N: 1e-2 -> 2e-3 s^-1, so the lee-wave Froude number Fr_L = N*h0/U goes

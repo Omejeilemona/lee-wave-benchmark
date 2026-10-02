@@ -9,7 +9,7 @@ Tolerance chosen for this demo: about 10 %. Dates: fill in.
 
 | # | Date | What | Command | Result: drag/ref | Notes |
 |---|------|------|---------|------------------|-------|
-| 0 | | Starting script `internal_wave_demo.jl` | -- | not compared | N = 1e-2 gives Fr_L = 1.0; compared a rotating run with a non-rotating formula |
+| 0 | | Starting script `archive/internal_wave_demo.jl` | -- | not compared | N = 1e-2 gives Fr_L = 1.0; compared a rotating run with a non-rotating formula |
 | 1 | | Theory self-test (Julia) | `julia --project theory.jl` | 0.980 (f=0); 0.748 (f=1.4e-4) | w(x,0) = U dh/dx to 1e-14. Matches an independent Python port. |
 | 2 | | f=0, 30-min timing test | `run_case.jl 0.0 test` | 0.064 | Only 3 snapshots; waves had not reached the measurement band. Not a result. |
 | 3 | | f=0, 6 h, Nz=256, WENO | `run_case.jl 0.0` | **1.455 (+48.5 %)** | Plateau from 4 h, drift -1.5 %. 7.6 min. |
@@ -23,6 +23,7 @@ Tolerance chosen for this demo: about 10 %. Dates: fill in.
 | 11 | | f=0, Nx=1024, Nz=256, Centered advection | `run_case.jl 0.0 nx=1024 centered` | not run | Planned: does the advection scheme matter? Same grid as run 8. |
 | 12 | | f=0, Nx=1024, Nz=256, dt = 10 s | (option not yet in the script) | not run | Planned: does the time step matter? |
 | 13 | | f=0, Nx=1024, Nz=256, partial-cell ridge | (option not yet in the script) | not run | Planned: does the representation of the ridge matter? Partial cells may not be supported by the pressure solver. |
+| 14 | | Updated single-file demo (f = 0, N = 2e-3, dt = 20 s, Centered advection, 18 h) | `internal_wave_demo_corrected.jl` | not run | Expected about 1.4-1.5 times the red line (the same offset). Uses Centered advection, so it is also a rough data point for row 11, though the flux level and window differ from `compare.jl`. |
 
 ## Checks (own Python calculations, in `checks/`)
 - Steady linear model with rigid lid and the same sponge (200 m, 600 s): drag/ref = 0.915;
