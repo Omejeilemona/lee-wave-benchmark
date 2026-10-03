@@ -93,6 +93,33 @@ Lee waves form above the ridge during the first hours. Later, small-scale noise 
 domain. I believe this noise is numerical, because Centered advection has no dissipation, and it fits the larger
 and oscillating flux in row 14 of the log, but I have not tested that directly.*
 
+## Key figures
+
+![Offset from linear theory on four grids](figures/summary_offset_vs_grid.png)
+
+*Ratio of simulated to linear-theory drag on four grids (f = 0, ridge 20 m). Halving the horizontal grid spacing
+lowers the offset from 46 % to 32 %, but halving the vertical spacing at the finer horizontal grid changes nothing,
+so the offset is not removed by refinement in this range.*
+
+![Vertical velocity and profile against linear theory](figures/fig_w_lee_f0_nx1024_nz512.png)
+
+*Finest grid, f = 0, after 6 h. Top: simulated vertical velocity (dashed lines mark the absorbing layers).
+Bottom: vertical velocity 75 m above the crest, averaged over 4-6 h, against linear theory. The pattern and its
+position agree with theory. The simulated lobes are larger, and there is a spike at the first staircase step on
+the upstream flank of the ridge.*
+
+![Drag against time, f = 0](figures/fig_flux_lee_f0_nx1024_nz512.png)
+
+*Same run. The drag rises as the waves reach 50-100 m above the crest, passes the linear value (red dashed line)
+and levels off at about 1.3 times it.*
+
+![Drag against time with rotation](figures/fig_flux_lee_frot_nx1024_nz256.png)
+
+*With rotation (f = 1.4e-4 1/s). The conserved flux (blue) and the momentum flux u'w' alone (orange dotted)
+differ, as in the linear theory (red and grey dashed lines). The drag is 0.709 of the non-rotating drag on the
+same grid, against 0.691 from a time-matched linear calculation. All other figures are indexed in
+`figures/README.md`.*
+
 ## What this does not show
 
 This is a numerical verification exercise. It does not validate the wave energy flux, test
