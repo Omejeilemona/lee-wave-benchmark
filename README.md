@@ -86,6 +86,13 @@ planned. Not yet tested: the time step and how the immersed ridge is represented
 model or numerical effect, or a difference between the simulation and the linear problem that I have not
 identified, is open.
 
+![Vertical velocity from the single-file demo](figures/internal_wave_generation_corrected_small.gif)
+
+*Vertical velocity from the single-file demo (18 h, Centered advection; reduced in size for the repository).
+Lee waves form above the ridge during the first hours. Later, small-scale noise spreads until it fills the
+domain. I believe this noise is numerical, because Centered advection has no dissipation, and it fits the larger
+and oscillating flux in row 14 of the log, but I have not tested that directly.*
+
 ## What this does not show
 
 This is a numerical verification exercise. It does not validate the wave energy flux, test
